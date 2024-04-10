@@ -11,7 +11,7 @@ var height = window.innerHeight;
 class MainBody extends Scene {
   constructor(props) {
     super("mainBody");
-    this.level = 0;
+    this.level = 1;
     this.hunger = 100;
     this.fun = 100;
     this.energy = 100;
@@ -20,6 +20,7 @@ class MainBody extends Scene {
     this.feedDialog = {};
     this.excreta = [];
     this.excretaCount = 0;
+    this.spendXP = 0;
 
     this.delayInMilliseconds = 10000;
     this.delayExcretaInMilliseconds = 60000;
@@ -195,6 +196,13 @@ class MainBody extends Scene {
     this.character.play("characterImage");
     if (this.excretaCount > 4) {
       this.excretaCount = 4;
+    }
+    
+    this.spendXP += 1
+    if(this.spendXP >= this.level * this.level * this.level) {
+      this.spendXP -= this.level * this.level * this.level
+      this.level ++
+      this.effect.play("EffectImage");
     }
   }
 
@@ -476,8 +484,8 @@ class MainBody extends Scene {
         })
         .on("pointerup", () => {
           this.cleanButton.setFrame(0);
-          this.excretaCount = 0;
           this.xp += this.excretaCount
+          this.excretaCount = 0;
         })
         .on("pointerout", () => {
           this.cleanButton.setFrame(0);
@@ -630,7 +638,7 @@ class MainBody extends Scene {
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
           this.xp -= 5;
-          this.energy += 10;
+          this.energy += 40;
           this.hunger += 20;
           this.updateSpecies();
         })
@@ -654,7 +662,7 @@ class MainBody extends Scene {
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
           this.xp -= 3;
-          this.energy += 3;
+          this.energy += 20;
           this.hunger += 10;
           this.updateSpecies();
         })
@@ -678,7 +686,7 @@ class MainBody extends Scene {
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
           this.xp -= 10;
-          this.energy += 20;
+          this.energy += 60;
           this.hunger += 30;
           this.updateSpecies();
         })
@@ -702,7 +710,7 @@ class MainBody extends Scene {
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
           this.xp -= 3;
-          this.energy += 5;
+          this.energy += 15;
           this.hunger += 5;
           this.updateSpecies();
         })

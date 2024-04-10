@@ -96,6 +96,7 @@ class HighLow extends Scene {
         font: "bold 72px Arial", 
       })
       .setOrigin(0.5, 0.5)
+      .setDepth(99999)
       .setVisible(false)
   }
   clickedHigher() {
