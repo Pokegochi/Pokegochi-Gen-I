@@ -205,7 +205,7 @@ class MainBody extends Scene {
 
   updateNumberGame(score) {
     console.log("updateNumberGame", score)
-    this.energy -= 1;
+    this.energy -= 10;
     if (score >= 2000) {
       this.fun += 40;
     } else if (score >= 1500) {
@@ -222,15 +222,36 @@ class MainBody extends Scene {
 
   updateHiLoGame(score) {
     console.log("updateHiLoGame", score)
-    this.energy -= 1;
+    this.energy -= 5;
+    if (score > 20) {
+      this.fun += 40;
+    } else if (score > 10) {
+      this.fun += 20;
+    } else if (score > 5) {
+      this.fun += 10;
+    } else if (score > 1) {
+      this.fun += 5;
+    } else {
+      this.fun += 2;
+    }
     this.fun += 20
     this.updateSpecies()
   }
 
   updateRabbitGame(score) {
     console.log("updateRabbitGame", score)
-    this.energy -= 2;
-    this.fun += 40
+    this.energy -= 20;
+    if (score <= 0) {
+      this.fun += 5;
+    } else if (score < 15) {
+      this.fun += 10;
+    } else if (score < 30) {
+      this.fun += 20;
+    } else if (score < 45) {
+      this.fun += 30;
+    } else {
+      this.fun += 40;
+    }
     this.updateSpecies()
   }
 
@@ -279,8 +300,9 @@ class MainBody extends Scene {
       .setScale(0.5, 0.5)
       .play("machineImage");
     this.character = this.add
-      .sprite(width / 2, height / 2 - 25, "character")
+      .sprite(width / 2, height / 2, "character")
       .setScale(0.25, 0.25)
+      .setOrigin(0.5, 0.5)
       .play("characterImage");
     this.effect = this.add
       .sprite(width / 2, height / 2, "EffectAnimation")
@@ -464,7 +486,7 @@ class MainBody extends Scene {
 
     this.foregroundImage = this.add.rectangle(0, 0, width, height, 0x000000, 0.3)
       .setOrigin(0, 0)
-      .setDepth(0)
+      .setDepth(1)
       .setScrollFactor(0)
       .setVisible(false);
 
@@ -568,6 +590,7 @@ class MainBody extends Scene {
           this.rabbitGameBtn,
           this.playCloseBtn, 
         ])
+        .setDepth(2)
         .setVisible(false);
 
       this.input.on("pointerup", (pt) => {
@@ -606,9 +629,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 2;
-          this.energy += 2;
-          this.hunger += 4;
+          this.xp -= 5;
+          this.energy += 10;
+          this.hunger += 20;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -630,9 +653,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 1;
-          this.energy += 2;
-          this.hunger += 1;
+          this.xp -= 3;
+          this.energy += 3;
+          this.hunger += 10;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -654,9 +677,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 2;
-          this.energy += 3;
-          this.hunger += 3;
+          this.xp -= 10;
+          this.energy += 20;
+          this.hunger += 30;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -678,9 +701,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 1;
-          this.energy += 1.5;
-          this.hunger += 1.5;
+          this.xp -= 3;
+          this.energy += 5;
+          this.hunger += 5;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -717,6 +740,7 @@ class MainBody extends Scene {
           this.iceCreamBtn, 
           this.feedCloseBtn, 
         ])
+        .setDepth(2)
         .setVisible(false);
 
       this.input.on("pointerup", (pt) => {
@@ -735,6 +759,9 @@ class MainBody extends Scene {
     this.updateTimerExcretaEle = this.time.addEvent({delay: this.delayExcretaInMilliseconds, loop: true, callback: this.updateExcretaTimer, callbackScope: this})
 
     {
+      eventsCenter.off('updateNumberGame')
+      eventsCenter.off('updateHiLoGame')
+      eventsCenter.off('updateRabbitGame')
       eventsCenter.on('updateNumberGame', this.updateNumberGame, this)
       eventsCenter.on('updateHiLoGame', this.updateHiLoGame, this)
       eventsCenter.on('updateRabbitGame', this.updateRabbitGame, this)
