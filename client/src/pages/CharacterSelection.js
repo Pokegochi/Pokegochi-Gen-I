@@ -1,13 +1,25 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { CHARACTER_LOADED } from "../actions/types";
 
 const CharacterSelection = ({ auth }) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     useEffect(() => {
         let elements = document.querySelector('canvas');
         if (elements !== null) elements.remove();
     }, [])
+
+    const onSelectedCharacter = (index) => {
+        dispatch({
+            type: CHARACTER_LOADED, 
+            payload: index
+        })
+        navigate("/game")
+    }
 
     if (auth.isAuthenticated === false) {
         return <Navigate to="/signup" />
@@ -25,55 +37,35 @@ const CharacterSelection = ({ auth }) => {
 
         </div>
         <div className="flex flex-row w-[900px] rounded-lg bg-[#91bc74] p-2 md:p-10 mx-auto overflow-auto gap-5">
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/1.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(0)}>
+                <img alt="cha1" src={require('../assets/characters/1.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/2.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(1)}>
+                <img alt="cha1" src={require('../assets/characters/2.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/3.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(2)}>
+                <img alt="cha1" src={require('../assets/characters/3.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/4.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(3)}>
+                <img alt="cha1" src={require('../assets/characters/4.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/5.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(4)}>
+                <img alt="cha1" src={require('../assets/characters/5.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/6.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(5)}>
+                <img alt="cha1" src={require('../assets/characters/6.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/7.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(6)}>
+                <img alt="cha1" src={require('../assets/characters/7.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/8.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(7)}>
+                <img alt="cha1" src={require('../assets/characters/8.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/9.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(8)}>
+                <img alt="cha1" src={require('../assets/characters/9.png').default} width={200} height={200} />
             </div>
-            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0">
-                <Link to="/game">
-                    <img alt="cha1" src={require('../assets/characters/10.png').default} width={200} height={200} />
-                </Link>
+            <div className="hover:scale-[130%] hover:cursor-pointer character w-[200px] shrink-0" onClick={()=>onSelectedCharacter(9)}>
+                <img alt="cha1" src={require('../assets/characters/10.png').default} width={200} height={200} />
             </div>
         </div>
     </>);

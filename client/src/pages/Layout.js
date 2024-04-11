@@ -65,36 +65,6 @@ const Layout = ({ auth, alert, logout }) => {
                 {auth.isAuthenticated === true ? (
                   <li>
                     <Link
-                      to="/Scoreboard"
-                      className="block py-2 pr-4 pl-3 text-white rounded md:border-0 md:hover:text-gray-400 md:p-0"
-                    >
-                      Scoreboard
-                    </Link>
-                  </li>
-                ) : (
-                  ""
-                )}
-
-                <li>
-                  <Link
-                    to="/withdraw"
-                    className="block py-2 pr-4 pl-3 text-white rounded md:border-0 md:hover:text-gray-400 md:p-0"
-                  >
-                    Withdraw
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    to="#"
-                    className="block py-2 pr-4 pl-3 text-white rounded md:border-0 md:hover:text-gray-400 md:p-0"
-                  >
-                    Contact
-                  </Link>
-                </li>
-                {auth.isAuthenticated === true ? (
-                  <li>
-                    <Link
                       to="/signup"
                       className="block py-2 pr-4 pl-3 text-white rounded md:border-0 md:hover:text-gray-400 md:p-0"
                       onClick={() => {

@@ -7,7 +7,7 @@ var height = window.innerHeight;
 
 class OnePlusTwo extends Scene {
   constructor(props) {
-    super("onePlusTwo");
+    super(props);
     this.sumsArray = [];
     this.score = 0;
     this.isGameOver = false;

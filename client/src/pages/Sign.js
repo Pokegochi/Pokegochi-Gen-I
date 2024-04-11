@@ -70,7 +70,7 @@ const Sign = ({ loadUser, logIn, signUp, auth, alerts }) => {
   return (
     <>
       <div className="w-full m-section flex items-center sm:justify-evenly">
-        <div className="container px-5 py-5 rounded-lg bg-gray-800 sm:px-10 sm:w-[500px] w-[300px] m-auto">
+        <div className="container px-5 py-5 rounded-lg bg-[#91bc74] sm:px-10 sm:w-[500px] w-[300px] m-auto">
           <div className="flex justify-evenly items-center">
             <div className="text-gray-300 text-xl h-[300px] ">
               <img
@@ -84,7 +84,7 @@ const Sign = ({ loadUser, logIn, signUp, auth, alerts }) => {
             <div className="mb-5">
               <label
                 htmlFor="name"
-                className="block mb-2 text-sm font-medium text-[#94cd84]"
+                className="block mb-2 text-sm font-medium text-[#346c54e5]"
               >
                 USERNAME
               </label>
@@ -92,7 +92,7 @@ const Sign = ({ loadUser, logIn, signUp, auth, alerts }) => {
                 type="text"
                 name="name"
                 id="emnameail"
-                className="bg-gray-800 border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                className="bg-[#346c54e5] border border-gray-300 text-white sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 value={username}
                 onChange={(e) => {
                   if (e.target.value.length <= 3) {

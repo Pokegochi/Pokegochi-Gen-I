@@ -10,7 +10,8 @@ var height = window.innerHeight;
 
 class MainBody extends Scene {
   constructor(props) {
-    super("mainBody");
+    super(props);
+    
     this.level = 1;
     this.hunger = 100;
     this.fun = 100;
@@ -221,7 +222,7 @@ class MainBody extends Scene {
 
   updateNumberGame(score) {
     console.log("updateNumberGame", score)
-    this.energy -= 10;
+    this.energy -= 20;
     if (score >= 2000) {
       this.fun += 40;
     } else if (score >= 1500) {
@@ -238,7 +239,7 @@ class MainBody extends Scene {
 
   updateHiLoGame(score) {
     console.log("updateHiLoGame", score)
-    this.energy -= 5;
+    this.energy -= 15;
     if (score > 20) {
       this.fun += 40;
     } else if (score > 10) {
@@ -256,7 +257,7 @@ class MainBody extends Scene {
 
   updateRabbitGame(score) {
     console.log("updateRabbitGame", score)
-    this.energy -= 20;
+    this.energy -= 30;
     if (score <= 0) {
       this.fun += 5;
     } else if (score < 15) {

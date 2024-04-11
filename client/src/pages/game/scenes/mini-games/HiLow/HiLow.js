@@ -6,7 +6,8 @@ var width = isMobile() ? window.innerWidth : 500;
 var height = window.innerHeight;
 class HighLow extends Scene {
   constructor(props) {
-    super("hiLow");
+    super(props);
+    
     this.spriteNumber = null;
     this.number = 0;
     this.workingButtons = true;
