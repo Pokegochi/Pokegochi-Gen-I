@@ -6,13 +6,28 @@ import MainBody from "./scenes/mainbody";
 import Loading from "./scenes/Loading";
 import IHateRabbits from "./scenes/mini-games/IHateRabbits/IHateRabbits";
 import { getWidth } from "../../utils/utils";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { nftConfigJSON } from "../../utils/nftConfig";
 
-const Main = () => {
+const Main = ({ auth }) => {
+  const navigate = useNavigate();
   useEffect(() => {
     const width = getWidth();
 
+    const nft = auth.user.nft[auth.selectedNFT]
+    if (!nft) {
+      navigate("/")
+    }
+    console.log(nft)
+    const nftName = nft.name;
+    const name = nftName.split(' - ')[0]
+    console.log(name)
+    const nftConfig = nftConfigJSON.find(item => item.name===name);
+    console.log(nftConfig)
+
     const loading = new Loading({ key: 'loading' });
-    const mainBody = new MainBody({ key: 'mainBody' });
+    const mainBody = new MainBody({ key: 'mainBody', nftConfig: nftConfig });
     const onePlusTwo = new OnePlusTwo({ key: 'onePlusTwo' });
     const highLow = new HighLow({ key: 'hiLow' });
     const iHateRabbits = new IHateRabbits({ key: 'iHateRabbits' });
@@ -57,5 +72,7 @@ const Main = () => {
     </>
   );
 };
-
-export default Main;
+const mapStateToProps = (state) => ({
+  auth: state.auth, 
+});
+export default connect(mapStateToProps, null)(Main);

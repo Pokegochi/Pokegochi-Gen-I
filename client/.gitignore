@@ -13,6 +13,7 @@
 
 # assets
 /src/assets/tamagochi
+/public/assets/sprites
 
 # misc
 .DS_Store

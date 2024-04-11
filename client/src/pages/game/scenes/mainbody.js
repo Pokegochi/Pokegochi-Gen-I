@@ -12,6 +12,7 @@ class MainBody extends Scene {
   constructor(props) {
     super(props);
     
+    this.nftConfig = props.nftConfig;
     this.level = 1;
     this.hunger = 100;
     this.fun = 100;
@@ -63,8 +64,9 @@ class MainBody extends Scene {
       frameHeight: 75,
     });
 
-    for (let i = 0; i < 14; i++) {
-      this.load.image(`cha${i + 1}`, `assets/sprites/Adult/12/${i + 1}.png`);
+    for (let i = 0; i < this.nftConfig.length; i++) {
+      console.log(`assets/sprites${this.nftConfig.location}/${i + 1}.png`)
+      this.load.image(`cha${i + 1}`, `assets/sprites${this.nftConfig.location}/${i + 1}.png`);
     }
 
     this.load.image("dialog", "assets/mainBody/mini-games/dialog.png");
@@ -294,7 +296,7 @@ class MainBody extends Scene {
     });
 
     const frames = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < this.nftConfig; i++) {
       frames.push({ key: `cha${i + 1}` });
     }
 

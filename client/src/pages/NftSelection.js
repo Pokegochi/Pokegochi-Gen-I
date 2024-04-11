@@ -59,6 +59,5 @@ const NFTSelection = ({ auth }) => {
 }
 const mapStateToProps = (state) => ({
     auth: state.auth, 
-    user: state.user, 
 });
 export default connect(mapStateToProps, null)(NFTSelection);
