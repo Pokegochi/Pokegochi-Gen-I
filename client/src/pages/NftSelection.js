@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { connect, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { NFT_LOADED } from "../actions/types";
 
 const NFTSelection = ({ auth }) => {
     const [nfts, setNfts] = useState([]);
     const [flag, setFlag] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     useEffect(() => {
         let elements = document.querySelector('canvas');
         if (elements !== null) elements.remove();
@@ -17,6 +20,14 @@ const NFTSelection = ({ auth }) => {
             setFlag(f=>!f)
         }
     }, [auth])
+
+    const onSelectNFT = (index) => {
+        dispatch({
+            type: NFT_LOADED, 
+            payload: index
+        })
+        navigate("/selectcharacter")
+    }
 
     if (auth.isAuthenticated === false) {
         return <Navigate to="/signup" />
@@ -31,15 +42,12 @@ const NFTSelection = ({ auth }) => {
                     Select NFT for your game
                 </div>
             </div>
-
         </div>
         <div className="flex flex-row w-[900px] rounded-lg bg-[#91bc74] p-2 md:py-10 md:px-5 mx-auto overflow-auto gap-5">
             {
               nfts.map((nft, index) => {
-                return <div key={index} className="hover:scale-[110%] hover:cursor-pointer character w-[200px] shrink-0 flex flex-col gap-5">
-                    <Link to="/selectcharacter">
-                        <img src={nft.image_uri} width={200} height={200} alt="character" />
-                    </Link>
+                return <div key={index} className="hover:scale-[110%] hover:cursor-pointer character w-[200px] shrink-0 flex flex-col gap-5" onClick={() => onSelectNFT(index)}>
+                    <img src={nft.image_uri} width={200} height={200} alt="character" />
                     <p className="text-white text-center">
                         {nft.name}
                     </p>

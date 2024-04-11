@@ -11,6 +11,12 @@ const Main = () => {
   useEffect(() => {
     const width = getWidth();
 
+    const loading = new Loading({ key: 'loading' });
+    const mainBody = new MainBody({ key: 'mainBody' });
+    const onePlusTwo = new OnePlusTwo({ key: 'onePlusTwo' });
+    const highLow = new HighLow({ key: 'hiLow' });
+    const iHateRabbits = new IHateRabbits({ key: 'iHateRabbits' });
+
     const config = {
       type: Phaser.AUTO,
       parent: "game",
@@ -30,12 +36,12 @@ const Main = () => {
         height: window.innerHeight,
       },
       backgroundColor: "#dff8d0",
-      scene: [MainBody, Loading, OnePlusTwo, HighLow, IHateRabbits],
+      scene: [mainBody, loading, onePlusTwo, highLow, iHateRabbits],
     };
 
     var game = new Phaser.Game(config);
 
-    game.scene.start("mainBody");
+    game.scene.start("loading");
 
     return () => {
       game = null;

@@ -19,7 +19,8 @@ var height = window.innerHeight;
 
 class IHateRabbits extends Scene {
   constructor(props) {
-    super("iHateRabbits");
+    super(props);
+    
     this.gameInit = false;
     this.gameStart = false;
     this.SCORE = 65;

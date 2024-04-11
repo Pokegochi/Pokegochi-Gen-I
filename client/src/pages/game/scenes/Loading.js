@@ -6,6 +6,10 @@ var height = window.innerHeight;
 
 var description = `Once upon a time there was a land where only the best cheese was found...\n\nFor a long time the local "VirtualPets" lived in harmony with the people who travelled across the seas to share in their cheese...`;
 class Loading extends Scene {
+  constructor(props) {
+      super(props);
+  }
+  
   preload() {
     this.load.image(
       "machine1",
@@ -94,11 +98,11 @@ class Loading extends Scene {
 
     this.skipTxt = this.add
       .text(width / 2, -25, "Click here to skip...", {
-        color: "#ffffff",
+        color: "#000000",
       })
-      .setOrigin(0.5, 0.5);
+      .setOrigin(0.5, 0.5)
+      .setInteractive();
 
-    this.skipTxt.setInteractive();
     this.skipTxt.on("pointerup", () => {
       clearInterval(this.interv);
       this.scene.start("mainBody");
