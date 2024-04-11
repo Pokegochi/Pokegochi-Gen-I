@@ -15,7 +15,7 @@ class MainBody extends Scene {
     this.hunger = 100;
     this.fun = 100;
     this.energy = 100;
-    this.xp = 100;
+    this.xp = 0;
     this.dialog = {};
     this.feedDialog = {};
     this.excreta = [];
@@ -179,11 +179,17 @@ class MainBody extends Scene {
 
   updateTimer() {
     console.log("updateTimer", this.hunger, this.fun, this.energy)
-    if (this.hunger > 0)
+    if (this.hunger > 0) {
       this.hunger -= 1;
+    } else {
+      this.energy -= 0.2;
+    }
 
-    if (this.fun > 0)
+    if (this.fun > 0) {
       this.fun -= 2;
+    } else {
+      this.energy -= 0.2;
+    }
 
     // if (this.energy > 0)
     //   this.energy -= 0.5;
@@ -192,17 +198,19 @@ class MainBody extends Scene {
   }
 
   pushExcreta() {
-    this.excretaCount++;
-    this.character.play("characterImage");
+    this.excretaCount ++
+    this.xp ++
+    this.character.play("characterImage")
     if (this.excretaCount > 4) {
-      this.excretaCount = 4;
+      this.excretaCount = 4
+      return
     }
     
     this.spendXP += 1
     if(this.spendXP >= this.level * this.level * this.level) {
       this.spendXP -= this.level * this.level * this.level
       this.level ++
-      this.effect.play("EffectImage");
+      this.effect.play("EffectImage")
     }
   }
 
@@ -389,12 +397,12 @@ class MainBody extends Scene {
         .setOrigin(0, 0);
       this.add.rectangle(width - 200, 50, 200, 25, 0xdff8d0)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
       this.hungerBar = this.add
         .rectangle(width - 200, 50, this.hunger * 2, 25, 0x013220)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
       
       this.funText = this.add
@@ -402,12 +410,12 @@ class MainBody extends Scene {
         .setOrigin(0, 0);
       this.add.rectangle(width - 200, 80, 200, 25, 0xdff8d0)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
       this.funBar = this.add
         .rectangle(width - 200, 80, this.fun * 2, 25, 0x013220)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
       
       this.energyText = this.add
@@ -415,12 +423,12 @@ class MainBody extends Scene {
         .setOrigin(0, 0);
       this.add.rectangle(width - 200, 110, 200, 25, 0xdff8d0)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
       this.energyBar = this.add
         .rectangle(width - 200, 110, this.energy * 2, 25, 0x013220)
         .setOrigin(0, 0)
-        .setDepth(3)
+        .setDepth(0)
         .setScrollFactor(0);
 
       this.xpText = this.add
@@ -484,7 +492,6 @@ class MainBody extends Scene {
         })
         .on("pointerup", () => {
           this.cleanButton.setFrame(0);
-          this.xp += this.excretaCount
           this.excretaCount = 0;
         })
         .on("pointerout", () => {
@@ -637,9 +644,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 5;
-          this.energy += 40;
-          this.hunger += 20;
+          // this.xp -= 2;
+          this.energy += 20;
+          this.hunger += 40;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -661,9 +668,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 3;
-          this.energy += 20;
-          this.hunger += 10;
+          // this.xp -= 1;
+          this.energy += 10;
+          this.hunger += 20;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -685,9 +692,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 10;
-          this.energy += 60;
-          this.hunger += 30;
+          // this.xp -= 5;
+          this.energy += 30;
+          this.hunger += 60;
           this.updateSpecies();
         })
         .on("pointerout", () => {
@@ -709,9 +716,9 @@ class MainBody extends Scene {
           this.enableInput()
           this.foregroundImage.setVisible(false)
           this.feedDialog.container.setVisible(false);
-          this.xp -= 3;
-          this.energy += 15;
-          this.hunger += 5;
+          // this.xp -= 1;
+          this.energy += 5;
+          this.hunger += 15;
           this.updateSpecies();
         })
         .on("pointerout", () => {

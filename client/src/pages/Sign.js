@@ -108,8 +108,7 @@ const Sign = ({ loadUser, logIn, signUp, auth, alerts }) => {
                 className="block mb-2 text-sm font-medium text-gray-300"
               >
                 WALLET ADDRESS {
-                  walletAddress &&
-                  walletAddress[0] + walletAddress[1] + walletAddress[2] + walletAddress[3] + '...' + walletAddress[walletAddress.length - 4] + walletAddress[walletAddress.length - 3] + walletAddress[walletAddress.length - 2] + walletAddress[walletAddress.length - 1]
+                  walletAddress && " - " + walletAddress.substring(0, 4) + "..." + walletAddress.substring(walletAddress.length - 3)
                 }
               </label>
               <button

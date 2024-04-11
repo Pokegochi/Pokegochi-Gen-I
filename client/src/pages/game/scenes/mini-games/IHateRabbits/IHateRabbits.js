@@ -83,9 +83,9 @@ class IHateRabbits extends Scene {
       })
       .on("pointerup", () => {
         this.backBtn.setFrame(0);
-        this.endGame();
         eventsCenter.emit('updateRabbitGame', this.SCORE)
         this.scene.start("mainBody", {style: "rabbitGame", score: (this.LEVEL===9)?this.SCORE:0});
+        this.endGame();
       })
       .on("pointerout", () => {
         this.backBtn.setFrame(0);
