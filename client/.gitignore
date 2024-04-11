@@ -11,6 +11,9 @@
 # production
 /build
 
+# assets
+/src/assets/tamagochi
+
 # misc
 .DS_Store
 .env.local
