@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { NFT_LOADED } from "../actions/types";
+import { getNft } from "../actions/user";
 
-const NFTSelection = ({ auth }) => {
+const NFTSelection = ({ auth, getNft }) => {
     const [nfts, setNfts] = useState([]);
     const [flag, setFlag] = useState(false);
     const navigate = useNavigate();
@@ -21,12 +22,15 @@ const NFTSelection = ({ auth }) => {
         }
     }, [auth])
 
-    const onSelectNFT = (index) => {
+    const onSelectNFT = async (index) => {
         dispatch({
-            type: NFT_LOADED, 
-            payload: index
+          type: NFT_LOADED, 
+          payload: index
         })
-        navigate("/selectcharacter")
+        const nftAddress = nfts[index].mint
+        await getNft(nftAddress)
+        // navigate("/selectcharacter")
+        navigate("/game")
     }
 
     if (auth.isAuthenticated === false) {
@@ -60,4 +64,4 @@ const NFTSelection = ({ auth }) => {
 const mapStateToProps = (state) => ({
     auth: state.auth, 
 });
-export default connect(mapStateToProps, null)(NFTSelection);
+export default connect(mapStateToProps, {getNft})(NFTSelection);

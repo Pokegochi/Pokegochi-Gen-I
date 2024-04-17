@@ -6,15 +6,6 @@ const User = new mongoose.Schema({
   },
   solana_wallet: {
     type: String,
-  },
-  score: {
-    type: Number,
-  },
-  earn: {
-    type: Number,
-  },
-  sec: {
-    type: Number,
   }
 });
 module.exports = mongoose.model("user", User);

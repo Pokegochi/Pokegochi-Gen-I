@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const auth = require("../../middleware/auth");
 const User = require("../../model/User");
+const Nft = require("../../model/Nft");
 const {ShyftSdk, Network} = require("@shyft-to/js")
 
 // @route    POST api/users
@@ -72,6 +73,7 @@ router.get('/security', auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 })
+
 router.post("/addEarn", auth, async (req, res) => {
   try {
     console.log("addEarn", req.user.id, req.body.earn);
@@ -111,6 +113,7 @@ router.get("/", auth, async (req, res) => {
     res.status(500).send("Server Error");
   }
 });
+
 router.post("/signup", async (req, res) => {
   console.log(req.body);
   const { name, wallet } = req.body;
@@ -122,8 +125,6 @@ router.post("/signup", async (req, res) => {
     user = new User({
       name: name,
       solana_wallet: wallet,
-      earn: 0,
-      score: 0,
     });
 
     await user.save();
@@ -181,5 +182,83 @@ router.post("/login", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
+router.post("/getNft", async (req, res) => {
+  const { nftAddress } = req.body
+  try {
+    let nft = await Nft.findOne({ nft_address: nftAddress });
+    if (nft) {
+      return res.json(nft)
+    } else {
+      return res.status(405).send("No result")
+    }
+  } catch (err) {
+    console.log(err)
+    return res.status(404).send("Server Error")
+  }
+})
+
+router.post("/jwtheader", async (req, res) => {
+  console.log("jwtheader")
+  try {
+    const { nftAddress } = req.body
+    const timeStamp = (new Date()).getTime()
+    const payload = {
+      date: timeStamp, 
+      nftAddress: nftAddress, 
+      // Add any other data you want to include in the token payload
+    };
+
+    const token = jwt.sign(payload, config.get("secretKey"), { expiresIn: '5m' }); // Token expires in 5 minutes
+    return res.json({token: token})
+  } catch(err) {
+    console.log(err)
+    return res.status(404).send("Server Error")
+  }
+})
+
+router.post("/update", async (req, res) => {
+  console.log("update")
+  try {
+    const { nftAddress, level, hunger, fun, energy, xp, excretaCount, spendXP } = req.body
+    const token = req.headers["jwt-header"]
+    const decoded = jwt.verify(token, config.get("secretKey"));
+    if (nftAddress === decoded.nftAddress) {
+      let nft = await Nft.findOne({ nft_address: nftAddress });
+      if (nft) {
+        await Nft.findOneAndUpdate(
+          { nft_address: nftAddress }, 
+          { level: level, 
+            hunger: hunger, 
+            fun: fun, 
+            energy: energy, 
+            xp: xp, 
+            excretaCount: excretaCount, 
+            spendXP: spendXP 
+          }, 
+          { new: true }
+        )
+      } else {
+        nft = new Nft({
+          nft_address: nftAddress, 
+          level: level, 
+          hunger: hunger, 
+          fun: fun, 
+          energy: energy, 
+          xp: xp, 
+          excretaCount: excretaCount, 
+          spendXP: spendXP
+        });
+        await nft.save()
+      }
+      return res.json(nft)
+    } else {
+      return res.status(406).send("Invalid credential")
+    }
+  } catch(err) {
+    console.log(err)
+    return res.status(404).send("Server Error")
+  }
+})
 
 module.exports = router;

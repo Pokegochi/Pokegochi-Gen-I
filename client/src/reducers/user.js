@@ -7,6 +7,7 @@ import {
   LOGOUT,
   NFT_LOADED,
   CHARACTER_LOADED,
+  NFTDATA_LOADED,
 } from "../actions/types";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   user: null,
   selectedNFT: -1, 
   selectedCharacter: -1, 
+  nftData: null, 
 };
 
 function authReducer(state = initialState, action) {
@@ -32,6 +34,11 @@ function authReducer(state = initialState, action) {
       return {
         ...state, 
         selectedNFT: payload
+      }
+    case NFTDATA_LOADED:
+      return {
+        ...state, 
+        nftData: payload
       }
     case CHARACTER_LOADED:
       return {

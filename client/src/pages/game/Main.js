@@ -16,18 +16,16 @@ const Main = ({ auth }) => {
     const width = getWidth();
 
     const nft = auth.user.nft[auth.selectedNFT]
+    const nftData = auth.nftData
     if (!nft) {
       navigate("/")
     }
-    console.log(nft)
     const nftName = nft.name;
     const name = nftName.split(' - ')[0]
-    console.log(name)
     const nftConfig = nftConfigJSON.find(item => item.name===name);
-    console.log(nftConfig)
 
     const loading = new Loading({ key: 'loading' });
-    const mainBody = new MainBody({ key: 'mainBody', nftConfig: nftConfig });
+    const mainBody = new MainBody({ key: 'mainBody', nftConfig: nftConfig, nftData: nftData });
     const onePlusTwo = new OnePlusTwo({ key: 'onePlusTwo' });
     const highLow = new HighLow({ key: 'hiLow' });
     const iHateRabbits = new IHateRabbits({ key: 'iHateRabbits' });
