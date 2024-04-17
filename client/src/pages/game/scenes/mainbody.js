@@ -4,6 +4,7 @@ import eventsCenter from "./EventCenter";
 
 import effect from "./assets/mainbody/effect/spritesheet.png"
 import effectJson from "./assets/mainbody/effect/sprites.json"
+import { updateNft } from "../../../actions/user";
 
 var width = isMobile() ? window.innerWidth : 500;
 var height = window.innerHeight;
@@ -12,21 +13,32 @@ class MainBody extends Scene {
   constructor(props) {
     super(props);
     
-    this.nftConfig = props.nftConfig;
-    this.level = 1;
-    this.hunger = 100;
-    this.fun = 100;
-    this.energy = 100;
-    this.xp = 0;
+    this.nftAddress = props.nftData.nft_address;
+    this.level = props.nftData.level;
+    this.hunger = props.nftData.hunger;
+    this.fun = props.nftData.fun;
+    this.energy = props.nftData.energy;
+    this.xp = props.nftData.xp;
     this.dialog = {};
     this.feedDialog = {};
     this.excreta = [];
-    this.excretaCount = 0;
-    this.spendXP = 0;
+    this.excretaCount = props.nftData.excretaCount;
+    this.spendXP = props.nftData.spendXP;
 
     this.delayInMilliseconds = 10000;
     this.delayExcretaInMilliseconds = 60000;
     this.delayPushExcreta = 2000;
+
+    if (props.nftConfig) {
+      this.nftConfig = props.nftConfig
+    } else {
+      this.nftConfig = {
+        name: "Bullishmon", 
+        type: "Adult", 
+        location: "Adult/1", 
+        length: 13
+      }
+    }
   }
 
   preload() {
@@ -65,8 +77,7 @@ class MainBody extends Scene {
     });
 
     for (let i = 0; i < this.nftConfig.length; i++) {
-      console.log(`assets/sprites${this.nftConfig.location}/${i + 1}.png`)
-      this.load.image(`cha${i + 1}`, `assets/sprites${this.nftConfig.location}/${i + 1}.png`);
+      this.load.image(`cha${i + 1}`, `assets/sprites/${this.nftConfig.location}/${i + 1}.png`);
     }
 
     this.load.image("dialog", "assets/mainBody/mini-games/dialog.png");
@@ -218,6 +229,22 @@ class MainBody extends Scene {
   }
 
   updateExcretaTimer() {
+    updateNft(this.nftAddress, 
+      this.level, 
+      parseFloat(this.hunger).toFixed(2), 
+      parseFloat(this.fun).toFixed(2), 
+      parseFloat(this.energy).toFixed(2), 
+      this.xp, 
+      this.excretaCount, 
+      this.spendXP)
+    .then((res) => {
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+    if (this.hunger === 0 || this.fun === 0 || this.energy === 0)
+      return;
     this.character.stop();
     this.time.delayedCall(this.delayPushExcreta, this.pushExcreta, [], this)
   }
@@ -296,7 +323,7 @@ class MainBody extends Scene {
     });
 
     const frames = [];
-    for (let i = 0; i < this.nftConfig; i++) {
+    for (let i = 0; i < this.nftConfig.length; i++) {
       frames.push({ key: `cha${i + 1}` });
     }
 
@@ -319,7 +346,7 @@ class MainBody extends Scene {
       .setScale(0.5, 0.5)
       .play("machineImage");
     this.character = this.add
-      .sprite(width / 2, height / 2, "character")
+      .sprite(width / 2, height / 2 - ((this.nftConfig.type === "Baby")?30:0), "character")
       .setScale(0.25, 0.25)
       .setOrigin(0.5, 0.5)
       .play("characterImage");
